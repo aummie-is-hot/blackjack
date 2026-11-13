@@ -57,7 +57,9 @@ async fn main() {
      let tm = TextureManager::new();
      let mut money = 1000;
      let mut lbl_money = Label::new("Money: ", 50.0, 580.0, 40);
+      let mut lbl_title = Label::new("Blackjack", 380.0, 70.0, 60);
         lbl_money.with_colors(WHITE, Some(DARKGREEN));
+        lbl_title.with_colors(WHITE, Some(DARKGREEN));
     let mut btn_stand = TextButton::new(
         400.0,
         670.0,
@@ -113,7 +115,7 @@ async fn main() {
     btn_exit.with_hover_text_color(WHITE);
     loop {
         clear_background(DARKGREEN);
-
+    draw_grid(50.0, BROWN);
         
         draw_rectangle(0.0, 630.0, 1200.0, 300.0, DARKGRAY);
         
@@ -129,6 +131,7 @@ async fn main() {
          if btn_exit.click(){
 
         }
+        lbl_title.draw();
          txt_input.draw();
          lbl_money.set_text(format!("Money: {}", money));
          lbl_money.draw();
