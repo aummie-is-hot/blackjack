@@ -34,11 +34,11 @@ mod utils;
 use crate::ui::grid::draw_grid;
 use crate::ui::image_button::ImageButton;
 use crate::ui::label::Label;
+use crate::ui::still_image::StillImage;
 use crate::ui::text_button::TextButton;
 use crate::ui::text_input::TextInput;
 use crate::utils::preload_image::TextureManager;
 use macroquad::input::KeyCode::M;
-use crate::ui::still_image::StillImage;
 use macroquad::prelude::*;
 use miniquad::date;
 /// Set up window settings before the app runs
@@ -58,86 +58,82 @@ fn window_conf() -> Conf {
 #[macroquad::main(window_conf)]
 async fn main() {
     rand::srand(date::now() as u64);
-    
-    let tm = TextureManager::new();
-      tm.preload_all(&["assets/card_front.png", "assets/card_back.png"]).await;
-    let mut dealers_cards = vec![StillImage::from_preload(
-        tm.get_preload("assets/card_back.png").unwrap(),
-        100.0,
-        200.0,
-        270.0,
-        100.0,
-        true,
-        1.0,
-    ),StillImage::from_preload(
-        tm.get_preload("assets/card_front.png").unwrap(),
-        100.0,
-        200.0,
-        390.0,
-        100.0,
-        true,
-        1.0,
-    ),
-    
-    
-    StillImage::from_preload(
-        tm.get_preload("assets/card_back.png").unwrap(),
-        100.0,
-        200.0,
-        510.0,
-        100.0,
-        true,
-        1.0,
-    ),StillImage::from_preload(
-        tm.get_preload("assets/card_back.png").unwrap(),
-        100.0,
-        200.0,
-        630.0,
-        100.0,
-        true,
-        1.0,
-    ),];
+  let tm = TextureManager::new();
+   tm.preload_with_loading_screen(&[
+    "assets/card_front.png",
+    "assets/card_back.png",
+    "assets/2_of_clubs.png",
+    "assets/2_of_diamonds.png",
+    "assets/2_of_hearts.png",
+    "assets/2_of_spades.png",
+    "assets/3_of_clubs.png",
+    "assets/3_of_diamonds.png",
+    "assets/3_of_hearts.png",
+    "assets/3_of_spades.png",
+    "assets/4_of_clubs.png",
+    "assets/4_of_diamonds.png",
+    "assets/4_of_hearts.png",
+    "assets/4_of_spades.png",
+    "assets/5_of_clubs.png",
+    "assets/5_of_diamonds.png",
+    "assets/5_of_hearts.png",
+    "assets/5_of_spades.png",
+    "assets/6_of_clubs.png",
+    "assets/6_of_diamonds.png",
+    "assets/6_of_hearts.png",
+    "assets/6_of_spades.png",
+    "assets/7_of_clubs.png",
+    "assets/7_of_diamonds.png",
+    "assets/7_of_hearts.png",
+    "assets/7_of_spades.png",
+    "assets/8_of_clubs.png",
+    "assets/8_of_diamonds.png",
+    "assets/8_of_hearts.png",
+    "assets/8_of_spades.png",
+    "assets/9_of_clubs.png",
+    "assets/9_of_diamonds.png",
+    "assets/9_of_hearts.png",
+    "assets/9_of_spades.png",
+    "assets/10_of_clubs.png",
+    "assets/10_of_diamonds.png",
+    "assets/10_of_hearts.png",
+    "assets/10_of_spades.png",
+    "assets/ace_of_clubs.png",
+    "assets/ace_of_diamonds.png",
+    "assets/ace_of_hearts.png",
+    "assets/ace_of_spades.png",
+    "assets/jack_of_clubs2.png",
+    "assets/jack_of_diamonds2.png",
+    "assets/jack_of_hearts2.png",
+    "assets/jack_of_spades2.png",
+    "assets/queen_of_clubs2.png",
+    "assets/queen_of_diamonds2.png",
+    "assets/queen_of_hearts2.png",
+    "assets/queen_of_spades2.png",
+    "assets/king_of_clubs2.png",
+    "assets/king_of_diamonds2.png",
+    "assets/king_of_hearts2.png",
+    "assets/king_of_spades2.png",
+], None, None).await;
+    let mut dealers_cards = vec![
+        StillImage::from_preload(tm.get_preload("assets/card_back.png").unwrap(), 100.0, 200.0, 270.0, 100.0, true, 1.0),
+        StillImage::from_preload(tm.get_preload("assets/card_front.png").unwrap(), 100.0, 200.0, 390.0, 100.0, true, 1.0),
+        StillImage::from_preload(tm.get_preload("assets/card_back.png").unwrap(), 100.0, 200.0, 510.0, 100.0, true, 1.0),
+        StillImage::from_preload(tm.get_preload("assets/card_back.png").unwrap(), 100.0, 200.0, 630.0, 100.0, true, 1.0),
+    ];
 
-    let mut player_cards = vec![StillImage::from_preload(
-        tm.get_preload("assets/card_front.png").unwrap(),
-        100.0,
-        200.0,
-        270.0,
-        320.0,
-        true,
-        1.0,
-    ),StillImage::from_preload(
-        tm.get_preload("assets/card_front.png").unwrap(),
-        100.0,
-        200.0,
-        390.0,
-        320.0,
-        true,
-        1.0,
-    ),
-    StillImage::from_preload(
-        tm.get_preload("assets/card_back.png").unwrap(),
-        100.0,
-        200.0,
-        510.0,
-        320.0,
-        true,
-        1.0,
-    ),StillImage::from_preload(
-        tm.get_preload("assets/card_back.png").unwrap(),
-        100.0,
-        200.0,
-        630.0,
-        320.0,
-        true,
-        1.0,
-    ),];
+    let mut player_cards = vec![
+        StillImage::from_preload(tm.get_preload("assets/card_front.png").unwrap(), 100.0, 200.0, 270.0, 320.0, true, 1.0),
+        StillImage::from_preload(tm.get_preload("assets/card_front.png").unwrap(), 100.0, 200.0, 390.0, 320.0, true, 1.0),
+        StillImage::from_preload(tm.get_preload("assets/card_back.png").unwrap(), 100.0, 200.0, 510.0, 320.0, true, 1.0),
+        StillImage::from_preload(tm.get_preload("assets/card_back.png").unwrap(), 100.0, 200.0, 630.0, 320.0, true, 1.0),
+    ];
 
     let mut money = 1000.0;
     let mut lbl_money = Label::new("Money: ", 50.0, 580.0, 40);
-    let  mut lbl_title = Label::new("Blackjack", 380.0, 70.0, 60);
+    let mut lbl_title = Label::new("Blackjack", 380.0, 70.0, 60);
     let mut lbl_dealer = Label::new("Dealers Hand:", 0.0, 150.0, 40);
-    let  mut lbl_player = Label::new("Your Hand:", 0.0, 350.0, 40);
+    let mut lbl_player = Label::new("Your Hand:", 0.0, 350.0, 40);
     lbl_money.with_colors(WHITE, Some(DARKGREEN));
     lbl_title.with_colors(WHITE, Some(DARKGREEN));
     lbl_dealer.with_colors(WHITE, Some(DARKGREEN));
@@ -162,57 +158,52 @@ async fn main() {
     let mut dealer_score = 0;
     let card = rand::gen_range(1, 15);
     match card {
-    1 => println!("Monday"),
-    2 => println!("Tuesday"),
-    3 => println!("Wednesday"),
-    4 | 5 | 6 => println!("Thursday to Saturday"),
-    7 => println!("Sunday"),
-    _ => println!("Invalid day"), // _ means anything else
-}
+        1 => println!("Monday"),
+        2 => println!("Tuesday"),
+        3 => println!("Wednesday"),
+        4 | 5 | 6 => println!("Thursday to Saturday"),
+        7 => println!("Sunday"),
+        _ => println!("Invalid day"), // _ means anything else
+    }
     loop {
         clear_background(DARKGREEN);
-         //draw_grid(50.0, BROWN);
+        //draw_grid(50.0, BROWN);
 
         draw_rectangle(0.0, 630.0, 1200.0, 300.0, DARKGRAY);
 
         if btn_deal.click() {
-           
-           
             let bet_amount = txt_input.get_text();
-            if txt_input.get_text().is_empty(){
+            if txt_input.get_text().is_empty() {
                 txt_input.set_prompt("INPUT BET AMOUNT");
-              
-            }else{
-if let Ok(bet_amount) = bet_amount.trim().parse::<f64>() {
-                if bet_amount > money {
-                    txt_input.set_text("");
-                    txt_input.set_prompt("INSUFFICENT FUNDS");
-                } else {
-                    money -= bet_amount;
-                    txt_input.set_prompt("Input bet amount");
-                    txt_input.set_text("");
-                     btn_deal.enabled = false;
+            } else {
+                if let Ok(bet_amount) = bet_amount.trim().parse::<f64>() {
+                    if bet_amount > money {
+                        txt_input.set_text("");
+                        txt_input.set_prompt("INSUFFICENT FUNDS");
+                    } else {
+                        money -= bet_amount;
+                        txt_input.set_prompt("Input bet amount");
+                        txt_input.set_text("");
+                        btn_deal.enabled = false;
+                    }
                 }
             }
-            }
-            
         }
         if btn_hit.click() {}
         if btn_stand.click() {}
         if btn_exit.click() {
             break;
         }
-        if btn_deal.enabled == false{
- for i in 0..player_cards.len() {
-            player_cards[i].draw();
-      
+        if btn_deal.enabled == false {
+            for i in 0..player_cards.len() {
+                player_cards[i].draw();
+            }
+            for i in 0..dealers_cards.len() {
+                dealers_cards[i].draw();
+            }
         }
-        for i in 0..dealers_cards.len(){
-            dealers_cards[i].draw();
-        }
-        }
-       lbl_dealer.draw();
-       lbl_player.draw();
+        lbl_dealer.draw();
+        lbl_player.draw();
         lbl_title.draw();
         txt_input.draw();
         lbl_money.set_text(&format!("Money: {:.2}", money));
